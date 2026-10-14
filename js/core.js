@@ -189,7 +189,7 @@ const I18N = {
 
 const State = {
   lang: localStorage.getItem('jmg_lang') || 'ar',
-  theme: localStorage.getItem('jmg_theme') || 'light',
+  theme: 'dark',   // dark only
   notifs: null
 };
 const langListeners = [];
@@ -218,13 +218,6 @@ function setLang(l) {
   applyI18n();
   refreshShellText();
   langListeners.forEach(f => f());
-}
-function setTheme(th) {
-  State.theme = th;
-  localStorage.setItem('jmg_theme', th);
-  document.documentElement.setAttribute('data-theme', th);
-  const b = $('#themeBtn');
-  if (b) b.innerHTML = icon(th === 'dark' ? 'sun' : 'moon', 20);
 }
 
 /* ------------------------------------------------ date helpers */
@@ -442,7 +435,6 @@ function buildShell(user, page) {
     top.innerHTML = `
       <button class="btn-icon menu-btn" id="menuBtn" data-i18n-title="app_name" title="">${icon('menu', 20)}</button>
       <span class="grow"></span>
-      <button class="btn-icon" id="themeBtn" data-i18n-title="theme_toggle"></button>
       <button class="btn-icon lang" id="langBtn">${icon('globe', 18)}<span></span></button>
       <div class="bell-wrap">
         <button class="btn-icon bell" id="bellBtn" data-i18n-title="notifications" aria-haspopup="true">${icon('bell', 20)}<span class="count" id="bellCount" hidden>0</span></button>
@@ -462,12 +454,10 @@ function buildShell(user, page) {
 function toggleDrawer(on) { const s = $('#sidebar'), b = $('#backdrop'); if (s) s.classList.toggle('open', on); if (b) b.classList.toggle('show', on); }
 function refreshShellText() {
   const lb = $('#langBtn span'); if (lb) lb.textContent = t('lang_label');
-  const tb = $('#themeBtn'); if (tb) tb.innerHTML = icon(State.theme === 'dark' ? 'sun' : 'moon', 20);
   if (State.notifs) renderBell(false);
 }
 function wireToggles() {
-  const tb = $('#themeBtn'), lb = $('#langBtn');
-  if (tb) { tb.innerHTML = icon(State.theme === 'dark' ? 'sun' : 'moon', 20); tb.onclick = () => setTheme(State.theme === 'dark' ? 'light' : 'dark'); }
+  const lb = $('#langBtn');
   if (lb) { const sp = $('span', lb); if (sp) sp.textContent = t('lang_label'); lb.onclick = () => setLang(State.lang === 'ar' ? 'en' : 'ar'); }
 }
 async function loadNotifs() {
