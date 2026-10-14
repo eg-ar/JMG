@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JMG | بوابة الموارد البشرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  (function(){try{var d=document.documentElement,l=localStorage.getItem('jmg_lang')||'ar',t=localStorage.getItem('jmg_theme')||'light';d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="topbar" id="topbar"></div>
+
+    <section class="hero">
+      <div class="hero-row">
+        <div class="reveal">
+          <h1 id="greet">…</h1>
+          <p data-i18n="hr_sub">إدارة الموظفين والأرصدة والتقارير من مكان واحد.</p>
+        </div>
+        <div class="hero-actions reveal">
+          <button class="btn btn-line" id="exportBtn" type="button"></button>
+          <a class="btn btn-white" href="#addEmp" data-i18n="btn_add_emp">إضافة موظف</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="content">
+      <div class="g4">
+        <section class="card reveal" data-tilt><div class="card-h"><h3 data-i18n="h_total">إجمالي الموظفين</h3></div><div class="big"><span id="hTotal">0</span></div></section>
+        <section class="card reveal" data-tilt><div class="card-h"><h3 data-i18n="h_active">حسابات شغّالة</h3></div><div class="big"><span id="hActive">0</span></div></section>
+        <section class="card reveal" data-tilt><div class="card-h"><h3 data-i18n="h_frozen">حسابات متجمّدة</h3></div><div class="big"><span id="hFrozen">0</span></div></section>
+        <section class="card accent reveal" data-tilt="5"><div><h3 data-i18n="h_pending">طلبات معلّقة</h3></div><div class="big" style="color:#fff"><span id="hPend">0</span></div></section>
+      </div>
+
+      <div class="split rev">
+        <!-- Add employee -->
+        <section class="card reveal" id="addEmp" data-tilt="3">
+          <div class="card-h"><h3 data-i18n="add_title">إضافة موظف جديد</h3></div>
+          <form class="form" id="addForm" novalidate>
+            <div class="field"><label for="aName" data-i18n="f_name">اسم الموظف</label><input class="input" id="aName" maxlength="80" autocomplete="off"></div>
+            <div class="field"><label for="aEmail" data-i18n="f_email">الإيميل</label><input class="input" id="aEmail" type="email" dir="ltr" autocomplete="off"></div>
+            <div class="row2">
+              <div class="field"><label for="aBal" data-i18n="f_balance">رصيد الإجازات السنوي (يوم)</label><input class="input" id="aBal" type="number" min="0" max="365" step="0.5" value="21"></div>
+              <div class="field"><label for="aDept" data-i18n="f_dept">القسم</label><input class="input" id="aDept" maxlength="60" autocomplete="off"></div>
+            </div>
+            <div class="row2">
+              <div class="field"><label for="aMgr" data-i18n="f_manager">المدير المباشر</label><select class="input" id="aMgr"></select></div>
+              <div class="field"><label for="aRole" data-i18n="f_role">الدور الوظيفي</label>
+                <select class="input" id="aRole"><option value="Employee" data-i18n="role_Employee">موظف</option><option value="Manager" data-i18n="role_Manager">مدير مباشر</option><option value="HR" data-i18n="role_HR">موارد بشرية</option></select>
+              </div>
+            </div>
+            <div class="field"><label for="aPass" data-i18n="f_temp_pass">كلمة مرور مؤقتة</label><input class="input" id="aPass" dir="ltr" autocomplete="new-password" data-i18n-ph="ph_temp" placeholder="سيبها فاضية وهنولّد واحدة"></div>
+            <div class="err-line" id="aErr" role="alert"></div>
+            <button class="btn btn-gold btn-block" id="aBtn" type="submit" data-i18n="btn_save_emp">حفظ الموظف</button>
+          </form>
+        </section>
+
+        <!-- Users -->
+        <section class="card reveal">
+          <div class="card-h"><h3 data-i18n="users_title">الموظفين</h3></div>
+          <div class="tbl-wrap">
+            <table class="tbl" style="min-width:760px">
+              <thead><tr>
+                <th data-i18n="th_name">الاسم</th><th data-i18n="th_dept">القسم</th><th data-i18n="th_manager">المدير</th><th data-i18n="th_balance">رصيد الإجازات</th><th data-i18n="th_status">الحالة</th><th data-i18n="th_action">الإجراء</th>
+              </tr></thead>
+              <tbody id="uBody"><tr><td colspan="6"><div class="sk" style="height:44px"></div></td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section class="card reveal">
+        <div class="card-h"><h3 data-i18n="all_reqs_title">كل الطلبات</h3></div>
+        <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr>
+              <th data-i18n="th_emp">الموظف</th><th data-i18n="th_type">النوع</th><th data-i18n="th_details">التفاصيل</th><th data-i18n="th_status">الحالة</th><th data-i18n="th_action">الإجراء</th>
+            </tr></thead>
+            <tbody id="rBody"><tr><td colspan="5"><div class="sk" style="height:44px"></div></td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/core.js"></script>
+<script src="js/hr.js"></script>
+</body>
+</html>

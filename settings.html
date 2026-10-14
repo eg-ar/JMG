@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JMG | بوابة الموارد البشرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  (function(){try{var d=document.documentElement,l=localStorage.getItem('jmg_lang')||'ar',t=localStorage.getItem('jmg_theme')||'light';d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="topbar" id="topbar"></div>
+
+    <section class="hero">
+      <div class="hero-row">
+        <div class="reveal">
+          <h1 data-i18n="nav_settings">الإعدادات</h1>
+          <p data-i18n="set_sub">غيّر كلمة المرور وظبّط تنبيهات الإيميل.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="content">
+      <div class="split even">
+        <!-- Password -->
+        <section class="card reveal" data-tilt="3">
+          <div class="card-h"><div style="display:flex;align-items:center;gap:12px"><div class="ico-chip" id="icoPw"></div><h3 data-i18n="pw_title">تغيير كلمة المرور</h3></div></div>
+          <form class="form" id="pwForm" novalidate>
+            <div class="field"><label for="pCur" data-i18n="f_cur_pw">كلمة المرور الحالية</label><input class="input" id="pCur" type="password" dir="ltr" autocomplete="current-password"></div>
+            <div class="field"><label for="pNew" data-i18n="f_new_pw">كلمة المرور الجديدة</label><input class="input" id="pNew" type="password" dir="ltr" autocomplete="new-password" minlength="8"></div>
+            <div class="field"><label for="pConf" data-i18n="f_conf_pw">تأكيد كلمة المرور الجديدة</label><input class="input" id="pConf" type="password" dir="ltr" autocomplete="new-password"></div>
+            <div class="err-line" id="pErr" role="alert"></div>
+            <button class="btn btn-gold btn-block" id="pBtn" type="submit" data-i18n="btn_change_pw">تغيير كلمة المرور</button>
+          </form>
+        </section>
+
+        <!-- Email opt-in -->
+        <section class="card reveal" data-tilt="3">
+          <div class="card-h"><div style="display:flex;align-items:center;gap:12px"><div class="ico-chip" id="icoMail"></div><h3 data-i18n="mail_title">تنبيهات الإيميل</h3></div></div>
+          <form class="form" id="mailForm" novalidate>
+            <p class="note" style="margin:0"><span data-i18n="mail_desc_emp">هيوصلك إيميل لما طلبك يتوافق عليه أو يترفض.</span> <span id="mgrDesc" data-i18n="mail_desc_mgr" hidden>وكمان هيوصلك إيميل لما حد من فريقك يقدّم طلب جديد.</span></p>
+            <label class="switch"><span data-i18n="mail_toggle">فعّل تنبيهات الإيميل</span><input type="checkbox" id="mOn"><span class="tg"></span></label>
+            <div class="field"><label for="mAddr" data-i18n="f_notify_email">إيميل التنبيهات</label><input class="input" id="mAddr" type="email" dir="ltr" autocomplete="email"></div>
+            <div class="err-line" id="mErr" role="alert"></div>
+            <button class="btn btn-gold btn-block" id="mBtn" type="submit" data-i18n="btn_save_mail">حفظ إعدادات الإيميل</button>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/core.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>

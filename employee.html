@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JMG | بوابة الموارد البشرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<script>
+  (function(){try{var d=document.documentElement,l=localStorage.getItem('jmg_lang')||'ar',t=localStorage.getItem('jmg_theme')||'light';d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="topbar" id="topbar"></div>
+
+    <section class="hero">
+      <div class="hero-row">
+        <div class="reveal">
+          <h1 id="greet">…</h1>
+          <p data-i18n="emp_sub">ده ملخص رصيدك وطلباتك. كل حاجة قدامك في مكان واحد.</p>
+        </div>
+        <div class="hero-actions reveal">
+          <a class="btn btn-line" href="#reqTable" data-i18n="btn_my_reqs">طلباتي</a>
+          <a class="btn btn-white" href="#newReq" data-i18n="btn_new_req">تقديم طلب جديد</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="content">
+      <div class="g3">
+        <!-- Annual leave -->
+        <section class="card reveal" data-tilt>
+          <div class="card-h">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="ico-chip" id="icoLeave"></div>
+              <h3 data-i18n="c_leave">الإجازات السنوية</h3>
+            </div>
+          </div>
+          <div class="leave-top">
+            <div class="ring">
+              <svg viewBox="0 0 112 112" aria-hidden="true">
+                <defs><linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4DFA8"/><stop offset="1" stop-color="#C8963A"/></linearGradient></defs>
+                <circle class="trk" cx="56" cy="56" r="46"/>
+                <circle class="val" id="ringVal" cx="56" cy="56" r="46"/>
+              </svg>
+              <div class="mid"><div><b id="lvLeft">0</b><small data-i18n="c_left">المتبقي</small></div></div>
+            </div>
+            <div class="note pend" id="lvPend" style="margin:0"></div>
+          </div>
+          <div class="stat-row">
+            <div class="stat"><span data-i18n="c_total">الإجمالي</span><b id="lvTotal">0</b></div>
+            <div class="stat"><span data-i18n="c_used">المستهلك</span><b id="lvUsed">0</b></div>
+            <div class="stat gold"><span data-i18n="c_left">المتبقي</span><b id="lvLeft2">0</b></div>
+          </div>
+        </section>
+
+        <!-- Permission hours -->
+        <section class="card reveal" data-tilt>
+          <div class="card-h">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="ico-chip" id="icoPerm"></div>
+              <h3 data-i18n="c_perm">رصيد الأذونات الشهري</h3>
+            </div>
+          </div>
+          <div class="big"><span id="pmLeft">0</span><small data-i18n="u_hours">ساعة</small></div>
+          <div class="segs in" id="segs" aria-hidden="true"></div>
+          <div class="stat-row" style="margin-top:14px">
+            <div class="stat"><span data-i18n="c_total">الإجمالي</span><b id="pmTotal">0</b></div>
+            <div class="stat"><span data-i18n="c_used">المستهلك</span><b id="pmUsed">0</b></div>
+            <div class="stat gold"><span data-i18n="c_left">المتبقي</span><b id="pmLeft2">0</b></div>
+          </div>
+          <p class="note" data-i18n="perm_note">٤ ساعات كل شهر، بتتجدد أول الشهر ومبتتنقلش للشهر اللي بعده.</p>
+        </section>
+
+        <!-- Highlight -->
+        <section class="card accent reveal" data-tilt="5">
+          <div>
+            <h3 id="accTitle">…</h3>
+            <p id="accText"></p>
+          </div>
+          <div><a class="btn btn-white" href="#newReq" data-i18n="btn_new_req">تقديم طلب جديد</a></div>
+        </section>
+      </div>
+
+      <div class="split rev">
+        <div class="stack">
+          <!-- New request -->
+          <section class="card reveal" id="newReq" data-tilt="3">
+            <div class="card-h"><h3 data-i18n="form_title">تقديم طلب جديد</h3></div>
+            <form class="form" id="reqForm" novalidate>
+              <div class="field">
+                <label for="fType" data-i18n="f_type">نوع الطلب</label>
+                <select class="input" id="fType">
+                  <option value="Leave" data-i18n="t_Leave">إجازة</option>
+                  <option value="Permission" data-i18n="t_Permission">إذن</option>
+                  <option value="Mission" data-i18n="t_Mission">مأمورية</option>
+                </select>
+              </div>
+
+              <div class="dyn show" id="gLeave">
+                <div class="row2">
+                  <div class="field"><label for="lFrom" data-i18n="f_from_date">من تاريخ</label><input class="input" type="date" id="lFrom"></div>
+                  <div class="field"><label for="lTo" data-i18n="f_to_date">إلى تاريخ</label><input class="input" type="date" id="lTo"></div>
+                </div>
+              </div>
+
+              <div class="dyn" id="gPerm">
+                <div class="field"><label for="pDate" data-i18n="f_perm_date">تاريخ اليوم</label><input class="input" type="date" id="pDate"></div>
+                <div class="row2">
+                  <div class="field"><label for="pFrom" data-i18n="f_from_time">من الساعة</label><input class="input" type="time" id="pFrom"></div>
+                  <div class="field"><label for="pTo" data-i18n="f_to_time">إلى الساعة</label><input class="input" type="time" id="pTo"></div>
+                </div>
+              </div>
+
+              <div class="dyn" id="gMission">
+                <div class="field"><label for="mDate" data-i18n="f_mission_date">تاريخ المأمورية</label><input class="input" type="date" id="mDate"></div>
+                <div class="field"><label for="mDest" data-i18n="f_dest">جهة المأمورية / المكان</label><input class="input" id="mDest" maxlength="120" data-i18n-ph="ph_dest" placeholder="مثلاً: التجمع الخامس"></div>
+                <label class="check"><input type="checkbox" id="mExp"><span class="box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span data-i18n="f_exp">المأمورية محتاجة سلفة أو بدل انتقال؟</span></label>
+              </div>
+
+              <div class="calc" id="calc" aria-live="polite"></div>
+              <div class="err-line" id="fErr" role="alert"></div>
+              <button class="btn btn-gold btn-block" id="subBtn" type="submit" data-i18n="btn_submit">إرسال الطلب</button>
+            </form>
+          </section>
+
+          <!-- Dot chart -->
+          <section class="card reveal" data-tilt="3">
+            <div class="card-h"><div><h3 data-i18n="chart_title">الإجازات شهر بشهر</h3><div class="sub" data-i18n="chart_sub">أيام الإجازة المعتمدة السنة دي</div></div></div>
+            <div class="dots" id="dots"></div>
+          </section>
+        </div>
+
+        <!-- Requests table -->
+        <section class="card reveal" id="reqTable">
+          <div class="card-h"><h3 data-i18n="tbl_title">طلباتي</h3></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr>
+                <th data-i18n="th_no">رقم الطلب</th><th data-i18n="th_type">النوع</th><th data-i18n="th_details">التفاصيل</th><th data-i18n="th_status">الحالة</th><th data-i18n="th_action">الإجراء</th>
+              </tr></thead>
+              <tbody id="reqBody"><tr><td colspan="5"><div class="sk" style="height:44px"></div></td></tr></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/core.js"></script>
+<script src="js/employee.js"></script>
+</body>
+</html>
